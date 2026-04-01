@@ -1,0 +1,25 @@
+# --- Deep Learning & Core (Soluciona el error de torch) ---
+torch --index-url https://download.pytorch.org/whl/cu121
+torchvision --index-url https://download.pytorch.org/whl/cu121
+torchaudio --index-url https://download.pytorch.org/whl/cu121
+
+# --- Ecosistema Hugging Face (Sin versiones fijas para evitar conflictos) ---
+transformers
+peft
+datasets
+accelerate
+bitsandbytes
+huggingface_hub
+
+# --- Frameworks específicos del proyecto [cite: 12, 13, 14] ---
+unsloth
+vllm
+ollama
+
+# --- Métricas de evaluación [cite: 56, 58, 59] ---
+evaluate
+bert-score
+rouge-score
+sacrebleu
+scikit-learn
+sentencepiece
