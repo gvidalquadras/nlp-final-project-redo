@@ -1,6 +1,6 @@
 {
   "best_global_step": 25,
-  "best_metric": 0.7088434100151062,
+  "best_metric": 0.7114027142524719,
   "best_model_checkpoint": "./outputs/peft/r16_lr00002/checkpoint-25",
   "epoch": 1.0,
   "eval_steps": 500,
@@ -11,10 +11,10 @@
   "log_history": [
     {
       "epoch": 1.0,
-      "eval_loss": 0.7088434100151062,
-      "eval_runtime": 0.8026,
-      "eval_samples_per_second": 62.299,
-      "eval_steps_per_second": 16.198,
+      "eval_loss": 0.7114027142524719,
+      "eval_runtime": 0.8946,
+      "eval_samples_per_second": 55.89,
+      "eval_steps_per_second": 14.531,
       "step": 25
     }
   ],
