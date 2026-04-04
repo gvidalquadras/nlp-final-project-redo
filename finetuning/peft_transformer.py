@@ -118,7 +118,7 @@ bnb_config = BitsAndBytesConfig(
     load_in_4bit=True,
     bnb_4bit_quant_type="nf4",
     bnb_4bit_use_double_quant=True,
-    bnb_4bit_compute_dtype=torch.bfloat16,
+    bnb_4bit_compute_dtype=torch.float16,
 )
 
 # =============================================================
@@ -144,7 +144,7 @@ for (r, lr) in GRID:
     model = AutoModelForCausalLM.from_pretrained(
         MODEL_NAME,
         quantization_config=bnb_config,
-        device_map="auto",
+        device_map={"": 0},
         dtype=torch.bfloat16,   # también corrige el warning de torch_dtype
     )
     model.config.use_cache = False
@@ -170,15 +170,15 @@ for (r, lr) in GRID:
     training_args = TrainingArguments(
         output_dir=output_dir,
         num_train_epochs=NUM_EPOCHS,
-        per_device_train_batch_size=4,
+        per_device_train_batch_size=2,
         per_device_eval_batch_size=4,
         gradient_accumulation_steps=4,
         warmup_ratio=0.03,
         learning_rate=lr,
         lr_scheduler_type="cosine",
         optim="paged_adamw_8bit",
-        bf16=True,
-        fp16=False,
+        bf16=False,
+        fp16=True,
         gradient_checkpointing=True,
         logging_steps=50,
         eval_strategy="epoch",

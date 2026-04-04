@@ -1,0 +1,2 @@
+run,r,alpha,lr,time_min,peak_vram,eval_loss
+r16_lr00002,16,32,0.0002,1.64,1.17,1.9026
