@@ -29,9 +29,10 @@ DEV_SAMPLES   = 50
 NUM_EPOCHS    = 1
 
 # Grid search
-LORA_RANKS     = [16]
-LEARNING_RATES = [2e-4]
-GRID           = list(itertools.product(LORA_RANKS, LEARNING_RATES))
+LORA_RANKS      = [8, 16, 32]
+ALPHA_FACTORS   = [1, 2]
+LEARNING_RATES  = [1e-4, 2e-4]
+GRID           = list(itertools.product(LORA_RANKS, ALPHA_FACTORS, LEARNING_RATES))
 
 # Hiperparámetros fijos
 LORA_DROPOUT   = 0.05
@@ -81,10 +82,10 @@ dev_ds   = dev_ds.map(format_dataset)
 # =============================================================
 results = []
 
-for (r, lr) in GRID:
-    alpha = 2 * r
+for (r, alpha_factor, lr) in GRID:
+    alpha = alpha_factor * r
 
-    run_name   = f"r{r}_lr{str(lr).replace('-', '').replace('.', '')}"
+    run_name   = f"r{r}_a{alpha}_lr{str(lr).replace('-', '').replace('.', '')}"
     output_dir = os.path.join(OUTPUT_BASE, run_name)
     os.makedirs(output_dir, exist_ok=True)
 

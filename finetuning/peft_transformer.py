@@ -45,11 +45,10 @@ MAX_LENGTH = 512
 # =============================================================
 # VALORES DE GRID SEARCH
 # =============================================================
-# LORA_RANKS      = [8, 16, 32]
-# LEARNING_RATES  = [1e-4, 2e-4]
-LORA_RANKS     = [16]       
-LEARNING_RATES = [2e-4]
-GRID            = list(itertools.product(LORA_RANKS, LEARNING_RATES))
+LORA_RANKS      = [8, 16, 32]
+LEARNING_RATES  = [1e-4, 2e-4]
+ALPHA_FACTORS   = [1, 2]
+GRID            = list(itertools.product(LORA_RANKS, ALPHA_FACTORS, LEARNING_RATES))
 
 # Hiperparámetros fijos de LoRA
 LORA_DROPOUT    = 0.05
@@ -126,10 +125,10 @@ bnb_config = BitsAndBytesConfig(
 # =============================================================
 results = []
 
-for (r, lr) in GRID:
-    alpha = 2 * r 
+for (r, alpha_factor, lr) in GRID:
+    alpha = alpha_factor * r 
 
-    run_name   = f"r{r}_lr{str(lr).replace('-', '').replace('.', '')}"
+    run_name   = f"r{r}_a{alpha}_lr{str(lr).replace('-', '').replace('.', '')}"
     output_dir = os.path.join(OUTPUT_BASE, run_name)
     os.makedirs(output_dir, exist_ok=True)
 
@@ -170,15 +169,15 @@ for (r, lr) in GRID:
     training_args = TrainingArguments(
         output_dir=output_dir,
         num_train_epochs=NUM_EPOCHS,
-        per_device_train_batch_size=2,
+        per_device_train_batch_size=4,
         per_device_eval_batch_size=4,
         gradient_accumulation_steps=4,
         warmup_ratio=0.03,
         learning_rate=lr,
         lr_scheduler_type="cosine",
         optim="paged_adamw_8bit",
-        bf16=False,
-        fp16=True,
+        bf16=True,
+        fp16=False,
         gradient_checkpointing=True,
         logging_steps=50,
         eval_strategy="epoch",
