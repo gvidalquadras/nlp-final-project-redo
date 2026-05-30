@@ -29,8 +29,8 @@ BASE_MODEL = "TinyLlama/TinyLlama-1.1B-Chat-v1.0"
 
 MODEL_PATHS = {
     "base": None,
-    "unsloth_r8": "./outputs/unsloth/r8_a16_lr00002/adapter",
-    "peft_r32": "./outputs/peft/r32_a32_lr00002/adapter",
+    "peft_r32": "./outputs/peft/r32_a64_lr00002/adapter",
+    "unsloth_r32": "./outputs/unsloth/r32_a64_lr00002/adapter",
 }
 
 OUTPUT_DIR = "./model_outputs"

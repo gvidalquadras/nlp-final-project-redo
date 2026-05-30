@@ -1,3 +1,4 @@
+import os
 import time
 import torch
 import pandas as pd
@@ -9,8 +10,8 @@ from peft import PeftModel
 BASE_MODEL = "TinyLlama/TinyLlama-1.1B-Chat-v1.0"
 
 MODELS = {
-    "unsloth_r8": "./outputs/unsloth/r8_a16_lr00002/adapter",
-    "peft_r32": "./outputs/peft/r32_a32_lr00002/adapter",
+    "base": None,
+    "peft_r32": "./outputs/peft/r32_a64_lr00002/adapter",
 }
 
 DEVICE = "cuda"
@@ -96,7 +97,9 @@ for name, path in MODELS.items():
         "peak_vram_gb": sum(memories)/len(memories),
     })
 
+os.makedirs("./results", exist_ok=True)
+
 df = pd.DataFrame(results)
-df.to_csv("transformers_benchmark.csv", index=False)
+df.to_csv("./results/transformers_benchmark.csv", index=False)
 
 print(df)
